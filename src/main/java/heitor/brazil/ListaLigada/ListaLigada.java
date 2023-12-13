@@ -6,22 +6,27 @@ public class ListaLigada {
     private int totElem = 0;
 
     public void addBeginning(Object elem) {
-        Celula newCelula = new Celula(elem, first);
-        this.first = newCelula;
+        Celula newCelula = new Celula(elem);
 
-        if(this.totElem == 0)
+        if(this.totElem == 0) {
+            this.first = newCelula;
             this.last = newCelula;
+        } else {
+            this.first.setPrev(newCelula);
+            newCelula.setNext(this.first);
+            this.first = newCelula;
+        }
 
         this.totElem++;
     }
 
     public void add(Object elem) {
-        Celula newCelula = new Celula(elem, null);
-
         if(this.totElem == 0)
             addBeginning(elem);
         else {
+            Celula newCelula = new Celula(elem, null);
             this.last.setNext(newCelula);
+            newCelula.setPrev(this.last);
             this.last = newCelula;
             this.totElem++;
         }
@@ -53,8 +58,11 @@ public class ListaLigada {
             add(elem);
         } else {
             Celula prev = this.getCelula(pos - 1);
+            Celula next = prev.getNext();
             Celula newCelula = new Celula(elem, prev.getNext());
+            newCelula.setPrev(prev);
             prev.setNext(newCelula);
+            next.setPrev(newCelula);
             this.totElem++;
         }
 
@@ -74,16 +82,49 @@ public class ListaLigada {
         if(this.totElem == 0)
             this.last = null;
     }
+    public void removeLast() {
+        if(this.totElem == 1)
+            this.removeBeginning();
+        else {
+            Celula pen = last.getPrev();
+            pen.setNext(null);
+            this.last = pen;
+            this.totElem--;
+        }
+    }
 
     public void remove(int pos) {
+        if(pos == 0)
+            removeBeginning();
+        else if (pos == totElem-1)
+            removeLast();
+        else {
+            Celula prev = this.getCelula(pos-1);
+            Celula current = prev.getNext();
+            Celula next = current.getNext();
 
+            prev.setNext(next);
+            next.setPrev(prev);
+
+            this.totElem--;
+        }
     }
+
 
     public int qtdElem() {
         return this.totElem;
     }
 
-    public boolean contains() {
+    public boolean contains(Object elem) {
+        Celula current = this.first;
+
+        while(current != null) {
+            if(current.getElem().equals(elem))
+                return true;
+
+            current = current.getNext();
+        }
+
         return false;
     }
 

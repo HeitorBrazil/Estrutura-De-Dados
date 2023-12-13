@@ -31,5 +31,14 @@ public class TestaListaLigada {
         lista.removeBeginning();
         System.out.println(lista);
         System.out.println(lista.qtdElem());
+
+        //Removendo do meio da lista
+        lista.remove(2);
+        System.out.println(lista);
+        System.out.println(lista.qtdElem());
+
+        //Procurando elemento na lista
+        System.out.println(lista.contains("Gabriel"));
+        System.out.println(lista.contains("Marcelo"));
     }
 }
