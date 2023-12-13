@@ -27,12 +27,52 @@ public class ListaLigada {
         }
     }
 
+    private boolean validPosition(int pos) {
+        return pos >= 0 && pos < this.totElem;
+    }
+
+    private Celula getCelula(int pos) {
+        if(validPosition(pos)) {
+
+            Celula current = first;
+
+            for (int i = 0; i < pos; i++) {
+                current = current.getNext();
+            }
+
+            return current;
+        }
+
+        throw new IllegalArgumentException("Posição Inválida");
+    }
+
     public void add(Object elem, int pos) {
+        if (pos == 0) {
+            addBeginning(elem);
+        } else if (pos == this.totElem) {
+            add(elem);
+        } else {
+            Celula prev = this.getCelula(pos - 1);
+            Celula newCelula = new Celula(elem, prev.getNext());
+            prev.setNext(newCelula);
+            this.totElem++;
+        }
 
     }
 
     public Object get(int pos) {
-        return null;
+        return this.getCelula(pos).getElem();
+    }
+
+    public void removeBeginning() {
+        if(this.totElem == 0)
+            throw new IllegalArgumentException("Lista vazia");
+
+        this.first = this.first.getNext();
+        this.totElem--;
+
+        if(this.totElem == 0)
+            this.last = null;
     }
 
     public void remove(int pos) {
@@ -40,7 +80,7 @@ public class ListaLigada {
     }
 
     public int qtdElem() {
-        return 0;
+        return this.totElem;
     }
 
     public boolean contains() {
