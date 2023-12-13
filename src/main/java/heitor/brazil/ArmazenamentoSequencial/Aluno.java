@@ -1,4 +1,4 @@
-package heitor.brazil;
+package heitor.brazil.ArmazenamentoSequencial;
 
 public class Aluno {
     private String nome;
