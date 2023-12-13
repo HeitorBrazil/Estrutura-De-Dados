@@ -25,5 +25,11 @@ public class VetorTeste {
 
         System.out.println(lista.contains(a3));
 
+        for (int i = 0; i < 300; i++) {
+            Aluno a4 = new Aluno("Danilo " + i);
+            lista.add(a4);
+        }
+
+        System.out.println(lista);
     }
 }
